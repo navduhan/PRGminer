@@ -244,8 +244,8 @@ def DNN(fasta_file: Union[str, Path], output_dir: Union[str, Path], level: str) 
             results = []
             for seq_id, prob in zip(seq_ids, predictions):
                 # Get Rgene probability
-                rgene_prob = float(prob[1])  # Second output is Rgene probability
-                non_rgene_prob = float(prob[0])  # First output is Non-Rgene probability
+                rgene_prob = float(prob[0])  # Second output is Rgene probability
+                non_rgene_prob = float(prob[1])  # First output is Non-Rgene probability
                 
                 # Convert to percentages and round
                 rgene_pct = round(rgene_prob * 100, 4)
@@ -253,7 +253,7 @@ def DNN(fasta_file: Union[str, Path], output_dir: Union[str, Path], level: str) 
                 
                 results.append({
                     'SampleID': seq_id,
-                    'Prediction': class_names[1] if rgene_prob >= predictor.threshold else class_names[0],
+                    'Prediction': class_names[0] if rgene_prob >= predictor.threshold else class_names[1],
                     'Non-Rgene': f"{non_rgene_pct:.4f}",
                     'Rgene': f"{rgene_pct:.4f}"
                 })
